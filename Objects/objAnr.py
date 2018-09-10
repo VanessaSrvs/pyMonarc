@@ -1,9 +1,10 @@
 
+import json
 from Objects.objConnector import MonarcConnector
 
 class Anr:
     
-    def __init__(self):
+    def __init__(self, language = "", model = "", description = "", label = ""):
 
         self.id = ""
 
@@ -33,9 +34,9 @@ class Anr:
         self.initLivrableDone = ""
         self.initRiskContext = ""
 
-        self.language = ""
+        self.language = language
         self.manageRisks = ""
-        self.model = ""
+        self.model = model
         self.modelImpacts = ""
         self.modelLivrableDone = ""
         self.modelSummary = ""
@@ -48,11 +49,11 @@ class Anr:
             self.label = ""
         else:
             self.description1 = ""
-            self.description2 = ""
+            self.description2 = description
             self.description3 = ""
             self.description4 = ""
             self.label1 = ""
-            self.label2 = ""
+            self.label2 = label
             self.label3 = ""
             self.label4 = ""
 
@@ -111,3 +112,11 @@ class Anr:
         anr['synthAct'] = self.synthAct
         anr['synthThreat'] = self.synthThreat
         anr['updater'] = self.updater
+    
+        return anr
+
+    def remoteAdd(self, monarcConnection):
+        #get the base url but without the '/' at the end
+        url = MonarcConnector.CLIENT_BASE_URL[:-1]
+        monarcConnection.addInformation(url,self.getAnr())
+        
